@@ -30,3 +30,14 @@ input:focus {
   padding: 5px 20px;
   height: 40px;
 }
+
+/* For Webkit-based browsers (Chrome, Safari and Opera) */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* For IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}

@@ -17,7 +17,6 @@ const LoginPage = () => {
   const [login, { isLoading, error }] = useLoginMutation();
 
   const { userInfo } = useSelector((state) => state.auth);
-  console.log(userInfo);
   const loginUser = async () => {
     try {
       const res = await login({ email, password }).unwrap();

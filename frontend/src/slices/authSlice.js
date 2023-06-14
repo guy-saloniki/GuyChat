@@ -4,6 +4,7 @@ const initialState = {
   userInfo: localStorage.getItem('userInfo')
     ? JSON.parse(localStorage.getItem('userInfo'))
     : null,
+  selectedChat: null,
 };
 
 const authSlice = createSlice({
@@ -14,9 +15,16 @@ const authSlice = createSlice({
       state.userInfo = action.payload;
       localStorage.setItem('userInfo', JSON.stringify(action.payload));
     },
+    logout: (state, action) => {
+      state.userInfo = null;
+      localStorage.removeItem('userInfo');
+    },
+    SetSelectedChat: (state, action) => {
+      state.selectedChat = action.payload;
+    },
   },
 });
 
-export const { setCredentials } = authSlice.actions;
+export const { setCredentials, logout, SetSelectedChat } = authSlice.actions;
 
 export default authSlice.reducer;

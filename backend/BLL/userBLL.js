@@ -42,6 +42,17 @@ const loginUser = asyncHandler(async (req, res, next) => {
   res.status(200).json({ _id: user._id, name: user.name, email: user.email });
 });
 
+// Logout user /clear cookie
+// route - POST /api/users/logout
+// Private
+const logoutUser = asyncHandler(async (req, res, next) => {
+  res.cookie('jwt', '', {
+    httpOnly: true,
+    expires: new Date(0),
+  });
+  res.status(200).json({ message: 'Logged out successfully' });
+});
+
 // Get user profile
 // route - GET /api/users/profile
 // Private
@@ -55,4 +66,23 @@ const getUserProfile = asyncHandler(async (req, res, next) => {
   res.status(200).json({ _id: user._id, name: user.name, email: user.email });
 });
 
-module.exports = { registerUser, loginUser, getUserProfile };
+// Get all users except current
+// route - GET /api/users/userslist
+// Private
+const getUsersList = asyncHandler(async (req, res, next) => {
+  const users = await User.find({ _id: { $ne: req.user._id } });
+
+  if (!users) {
+    res.status(404);
+    throw new Error('No users found');
+  }
+  res.status(200).json(users);
+});
+
+module.exports = {
+  registerUser,
+  loginUser,
+  getUserProfile,
+  getUsersList,
+  logoutUser,
+};
